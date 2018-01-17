@@ -47,7 +47,7 @@ class BodyMoveViewController: UIViewController {
         return pt
     }
     func makebackgroundFroDrag() ->(){
-        bkArea1 = UIView(frame: CGRect(x: SCREEN_WIDTH*0.2, y: SCREEN_HEIGHT*0.3, width: SCREEN_WIDTH*0.6, height: SCREEN_WIDTH*0.6))
+        bkArea1 = UIView(frame: CGRect(x: backGroundPic.frame.width*0.2, y: backGroundPic.frame.height*0.3, width: backGroundPic.frame.maxX*0.6, height: backGroundPic.frame.maxX*0.6))
         bkArea1?.layer.backgroundColor = UIColor.cyan.cgColor
         bkArea1?.layer.borderWidth = 2
         bkArea1?.layer.borderColor = UIColor.brown.cgColor
@@ -88,7 +88,7 @@ class BodyMoveViewController: UIViewController {
         self.showText.text = "移动坐标点 x:\(String(Int((sender.view?.center.x)!))) | y:\(String(Int((sender.view?.center.y)!)))"
         if(sender.state == .ended){
             //拖拽点回弹到起始位置
-            UIView.animate(withDuration: 0.4, delay: 0.2, options: .curveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0.2, options: .curveEaseInOut, animations: {
                 () -> Void in
                 sender.view?.center = CGPoint(x: (self.bkArea1?.center.x)!, y: (self.bkArea1?.center.y)!)
             }, completion: { (success) -> Void in
