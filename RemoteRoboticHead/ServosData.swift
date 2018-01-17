@@ -61,7 +61,6 @@ struct OneFaceAction {
 //设备屏幕尺寸
 public let SCREEN_WIDTH=UIScreen.main.bounds.size.width
 public let SCREEN_HEIGHT=UIScreen.main.bounds.size.height
-
 //获取视图尺寸
 public func VIEW_WIDTH(view:UIView)->CGFloat{
     return view.frame.size.width
@@ -69,7 +68,15 @@ public func VIEW_WIDTH(view:UIView)->CGFloat{
 public func VIEW_HEIGHT(view:UIView)->CGFloat{
     return view.frame.size.height
 }
-
+//活动限制空间
+struct LimitArea {
+    var minW:CGFloat
+    var maxW:CGFloat
+    var minH:CGFloat
+    var maxH:CGFloat
+    var centerX:CGFloat
+    var centerY:CGFloat
+}
 
 //数据列表结构//
 /*

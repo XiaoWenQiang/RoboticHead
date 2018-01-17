@@ -456,6 +456,7 @@
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="COj-kE-86H">
                                         <rect key="frame" x="0.0" y="30" width="320" height="431"/>
+                                        <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="显示临时数据" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTS-eJ-0ff">
                                         <rect key="frame" x="0.0" y="461" width="320" height="26"/>
@@ -505,12 +506,13 @@
                         <viewLayoutGuide key="safeArea" id="nrh-1K-77A"/>
                     </view>
                     <connections>
+                        <outlet property="backGroundPic" destination="COj-kE-86H" id="zof-pz-rMQ"/>
                         <outlet property="showText" destination="UTS-eJ-0ff" id="xgY-hg-81Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Npz-rl-40p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2413" y="1032"/>
+            <point key="canvasLocation" x="2434" y="1173"/>
         </scene>
         <!--Action List View Controller-->
         <scene sceneID="k1u-Rn-oZ5">
@@ -717,8 +719,8 @@
         <image name="faceArea" width="320" height="460"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pf9-DE-nxc"/>
+        <segue reference="5UP-qJ-FbG"/>
         <segue reference="UrZ-6y-IKS"/>
-        <segue reference="uQX-s5-CM3"/>
+        <segue reference="enI-8g-IIT"/>
     </inferredMetricsTieBreakers>
 </document>

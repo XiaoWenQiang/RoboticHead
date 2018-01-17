@@ -148,7 +148,7 @@ class ActionListViewController: UIViewController,UITableViewDelegate, UITableVie
         var datat:[UInt8] = []
         if(listxt!.count>1){
             for v in listxt! {
-                //如果数值大于255 或是文字 为0
+                //转数字 如果数值大于255 或是文字 为0
                 var st = (v as NSString).intValue
                 if(st>255){
                     st = 255
