@@ -10,18 +10,21 @@ import Foundation
 import UIKit
 import CoreBluetooth
 
+
+//角度计算
+public func map(x:CGFloat, in_min:CGFloat, in_max:CGFloat, out_min:CGFloat, out_max:CGFloat) -> UInt8 {
+    return UInt8((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+}
 //蓝牙
 var dataperipheral: CBPeripheral!
 var datawriteCharacteristic: CBCharacteristic!
 
-//蓝牙传输用，待测试看能否使用全局变量
+//蓝牙传输用
 var currentServo = 250
 //单独电动机连续转动固定值 210 + 0...20 //代表20个电动机号
 let ServoOneAccount = 210
 //所有电机一起转动固定值，接下来发送20个数组 250 + [90,90...90]
 let ServoAllAccount = 250
-//控制每个电机飞连续固定值,接下来发送每个一组 240 + [2,90,12,50..]
-let ServoSideAccount = 252
 //蓝牙写入数据
 public func writeToPeripheral(bytes:[UInt8]) {
     if datawriteCharacteristic != nil {

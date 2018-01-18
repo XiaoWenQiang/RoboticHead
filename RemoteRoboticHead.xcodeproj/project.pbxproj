@@ -19,6 +19,7 @@
 		5F4CF35B2007834500ED2066 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F4CF3592007834500ED2066 /* Main.storyboard */; };
 		5F4CF3602007834500ED2066 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F4CF35E2007834500ED2066 /* LaunchScreen.storyboard */; };
 		5F9E6DC7200DF27F00166FAB /* BodyMoveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9E6DC6200DF27F00166FAB /* BodyMoveViewController.swift */; };
+		5F9E6DC92010725900166FAB /* BtnCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9E6DC82010725900166FAB /* BtnCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		5F4CF35F2007834500ED2066 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F4CF3612007834500ED2066 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F9E6DC6200DF27F00166FAB /* BodyMoveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMoveViewController.swift; sourceTree = "<group>"; };
+		5F9E6DC82010725900166FAB /* BtnCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BtnCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				5F3BD83F2009DBF600110755 /* ServosData.swift */,
 				5F3BD843200B8B5100110755 /* ActionListViewController.swift */,
 				5F9E6DC6200DF27F00166FAB /* BodyMoveViewController.swift */,
+				5F9E6DC82010725900166FAB /* BtnCollectionViewCell.swift */,
 			);
 			path = RemoteRoboticHead;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				5F3BD83E2009DACB00110755 /* CSTableViewCell.swift in Sources */,
 				5F3BD844200B8B5100110755 /* ActionListViewController.swift in Sources */,
 				5F3BD8402009DBF600110755 /* ServosData.swift in Sources */,
+				5F9E6DC92010725900166FAB /* BtnCollectionViewCell.swift in Sources */,
 				5F4CF3582007834500ED2066 /* BTViewController.swift in Sources */,
 				5F4CF3562007834500ED2066 /* AppDelegate.swift in Sources */,
 				5F3BD810200913E000110755 /* ControlViewController.swift in Sources */,

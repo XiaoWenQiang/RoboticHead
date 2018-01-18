@@ -8,8 +8,13 @@
 
 import UIKit
 
-class BodyMoveViewController: UIViewController {
+//UICollectionViewDelegateFlowLayout
 
+class BodyMoveViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    
+    @IBOutlet weak var BtnsListView: UICollectionView!
+    
     @IBOutlet weak var showText: UILabel!
     @IBOutlet weak var backGroundPic: UIImageView!
     
@@ -24,6 +29,8 @@ class BodyMoveViewController: UIViewController {
     var penDrag1:UIPanGestureRecognizer?
     var penDrag2:UIPanGestureRecognizer?
     
+    var currentSelectServo:[Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //绘制背景框和拖拽点
@@ -34,6 +41,13 @@ class BodyMoveViewController: UIViewController {
         //监听拖拽
         penDrag1 = UIPanGestureRecognizer(target: self, action: #selector(BodyMoveViewController.drage_head(_:)))
         mvPoint1?.addGestureRecognizer(penDrag1!)
+        
+        //列表尺寸布局
+        let layout = UICollectionViewFlowLayout.init()
+        layout.itemSize = CGSize.init(width: SCREEN_WIDTH/5, height: 20)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        BtnsListView.collectionViewLayout = layout
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,7 +61,7 @@ class BodyMoveViewController: UIViewController {
         return pt
     }
     func makebackgroundFroDrag() ->(){
-        bkArea1 = UIView(frame: CGRect(x: backGroundPic.frame.width*0.2, y: backGroundPic.frame.height*0.3, width: backGroundPic.frame.maxX*0.6, height: backGroundPic.frame.maxX*0.6))
+        bkArea1 = UIView(frame: CGRect(x: backGroundPic.frame.width*0.2, y: backGroundPic.frame.midX+backGroundPic.frame.height*0.2, width: backGroundPic.frame.maxX*0.6, height: backGroundPic.frame.maxX*0.6))
         bkArea1?.layer.backgroundColor = UIColor.cyan.cgColor
         bkArea1?.layer.borderWidth = 2
         bkArea1?.layer.borderColor = UIColor.brown.cgColor
@@ -85,6 +99,8 @@ class BodyMoveViewController: UIViewController {
         }
         sender.view?.center = CGPoint(x: sender.view!.center.x + point.x, y: sender.view!.center.y + point.y)
         sender.setTranslation(.zero, in: view)
+        //计算并输出坐标点
+        self.checkAngleOnPage()
         self.showText.text = "移动坐标点 x:\(String(Int((sender.view?.center.x)!))) | y:\(String(Int((sender.view?.center.y)!)))"
         if(sender.state == .ended){
             //拖拽点回弹到起始位置
@@ -98,11 +114,75 @@ class BodyMoveViewController: UIViewController {
                     self.mvPoint1?.layer.backgroundColor = UIColor.blue.cgColor
                     self.mvPoint1?.alpha = 1
                     self.showText.text="动作操作结束"
+                    self.checkAngleOnPage()
                 }
             })
             return
         }
     }
+    
+    //角度计算并输出 按单双数
+    func checkAngleOnPage() -> () {
+        var outdatas:[UInt8] = []
+        if(currentSelectServo.count>0){
+            for i in 0..<currentSelectServo.count {
+                outdatas.append(UInt8(ServoOneAccount + currentSelectServo[i]))
+                if(i%2 == 0){
+                    outdatas.append(map(x: (mvPoint1?.center.x)!, in_min: (bkArea1?.frame.minX)!, in_max: (bkArea1?.frame.maxX)!, out_min: CGFloat(servosData[currentSelectServo[i]].minA), out_max: CGFloat(servosData[currentSelectServo[i]].maxA)))
+                }else{
+                    outdatas.append(map(x: (mvPoint1?.center.y)!, in_min: (bkArea1?.frame.minY)!, in_max: (bkArea1?.frame.maxY)!, out_min: CGFloat(servosData[currentSelectServo[i]].minA), out_max: CGFloat(servosData[currentSelectServo[i]].maxA)))
+                }
+            }
+            //self.showText.text = "移动坐标点\(outdatas)"
+            print("测试点:\(outdatas)")
+            writeToPeripheral(bytes: outdatas)
+        }
+    }
+    
+    
+    //MARK: - Btns list
+    
+    //返回列表数量
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20 //servoData.count
+    }
+    //生成列表 按钮
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = BtnsListView.dequeueReusableCell(withReuseIdentifier: "CheckBtnCells", for: indexPath) as! BtnCollectionViewCell
+        cell.nameBtn.setTitle(servosData[indexPath.row].name, for: .normal)
+        //按钮tag赋值为index
+        cell.nameBtn.tag = indexPath.row
+        //按钮点击事件
+        cell.nameBtn.addTarget(self, action: #selector(BodyMoveViewController.selectBtnInList(_:)), for: .touchUpInside)
+        if(currentSelectServo.contains(indexPath.row)){
+            cell.nameBtn.backgroundColor = UIColor.red
+            cell.nameBtn.isSelected = true
+        }else{
+            cell.nameBtn.backgroundColor = UIColor.darkGray
+            cell.nameBtn.isSelected = false
+        }
+        return cell
+    }
+    //列表按钮点击事件， 点击后加入激活数组
+    @objc func selectBtnInList(_ sender: UIButton) {
+        if(currentSelectServo.contains(sender.tag)){
+            sender.backgroundColor = UIColor.darkGray
+            for i in 0..<currentSelectServo.count {
+                if (currentSelectServo[i] == sender.tag){
+                    currentSelectServo.remove(at: i)
+                    return
+                }
+            }
+        }else{
+            currentSelectServo.append(sender.tag)
+            sender.backgroundColor = UIColor.red
+        }
+        self.showText.text = "当前选择了:\(currentSelectServo)"
+    }
+    
+    
+    
+    
     
     /*
     // MARK: - Navigation

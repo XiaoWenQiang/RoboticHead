@@ -454,8 +454,54 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fzi-Il-x0D">
+                                        <rect key="frame" x="0.0" y="30" width="320" height="85"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="85" id="qSN-5D-WrQ"/>
+                                        </constraints>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="M8T-Xx-iXM">
+                                            <size key="itemSize" width="45" height="30"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CheckBtnCells" id="K1P-MR-kMI" customClass="BtnCollectionViewCell" customModule="RemoteRoboticHead" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5lN-A4-7at">
+                                                            <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                            <state key="normal">
+                                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                        </button>
+                                                    </subviews>
+                                                </view>
+                                                <constraints>
+                                                    <constraint firstItem="5lN-A4-7at" firstAttribute="top" secondItem="K1P-MR-kMI" secondAttribute="top" id="6Bg-RY-lpb"/>
+                                                    <constraint firstItem="5lN-A4-7at" firstAttribute="leading" secondItem="K1P-MR-kMI" secondAttribute="leading" id="JlI-od-TL8"/>
+                                                    <constraint firstAttribute="trailing" secondItem="5lN-A4-7at" secondAttribute="trailing" id="cRX-aJ-YW3"/>
+                                                    <constraint firstAttribute="bottom" secondItem="5lN-A4-7at" secondAttribute="bottom" id="hGq-2o-j43"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="nameBtn" destination="5lN-A4-7at" id="Q0D-LX-6bi"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="Xyh-hI-uq9" id="2Dj-K0-cL0"/>
+                                            <outlet property="delegate" destination="Xyh-hI-uq9" id="H3V-y4-mEv"/>
+                                        </connections>
+                                    </collectionView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="COj-kE-86H">
-                                        <rect key="frame" x="0.0" y="30" width="320" height="431"/>
+                                        <rect key="frame" x="0.0" y="115" width="320" height="346"/>
                                         <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="显示临时数据" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTS-eJ-0ff">
@@ -489,6 +535,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="UTS-eJ-0ff" secondAttribute="trailing" id="5tk-BB-B7B"/>
                                     <constraint firstItem="xn0-Vg-OxP" firstAttribute="leading" secondItem="If7-HC-Acs" secondAttribute="leading" id="QPu-nI-6K4"/>
+                                    <constraint firstItem="fzi-Il-x0D" firstAttribute="centerX" secondItem="If7-HC-Acs" secondAttribute="centerX" id="TpP-MA-2w4"/>
                                     <constraint firstItem="UTS-eJ-0ff" firstAttribute="leading" secondItem="If7-HC-Acs" secondAttribute="leading" id="Y8x-CK-8sU"/>
                                     <constraint firstAttribute="trailing" secondItem="vga-yd-Pzf" secondAttribute="trailing" id="aJO-OA-HuY"/>
                                     <constraint firstItem="vga-yd-Pzf" firstAttribute="leading" secondItem="If7-HC-Acs" secondAttribute="leading" id="bKa-Tu-WND"/>
@@ -506,13 +553,14 @@
                         <viewLayoutGuide key="safeArea" id="nrh-1K-77A"/>
                     </view>
                     <connections>
+                        <outlet property="BtnsListView" destination="fzi-Il-x0D" id="8bn-ir-Fgq"/>
                         <outlet property="backGroundPic" destination="COj-kE-86H" id="zof-pz-rMQ"/>
                         <outlet property="showText" destination="UTS-eJ-0ff" id="xgY-hg-81Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Npz-rl-40p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2434" y="1173"/>
+            <point key="canvasLocation" x="2433.75" y="1172.5352112676057"/>
         </scene>
         <!--Action List View Controller-->
         <scene sceneID="k1u-Rn-oZ5">

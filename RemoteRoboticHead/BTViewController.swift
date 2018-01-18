@@ -144,7 +144,7 @@ class BTViewController: UIViewController, UITableViewDelegate, UITableViewDataSo
         self.peripheral.delegate = self
         self.peripheral.discoverServices(nil)
         self.showText.text = "已经链接： \(self.peripheral.name ?? "none")"
-        //全局变量？待测试
+        //全局变量
         dataperipheral = self.peripheral
     }
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
@@ -214,8 +214,8 @@ class BTViewController: UIViewController, UITableViewDelegate, UITableViewDataSo
         if(characteristic.uuid.description == "FFE1" || characteristic.uuid.uuidString == "FFE1" || characteristic.uuid.description == "2AF1" || characteristic.uuid.uuidString == "2AF1"){
             self.showText.text = "完成特征发来的:\(String(describing: characteristic.uuid.uuidString))"
             //蓝牙成功，启动按钮
-            //测试时候关闭
-            //self.btnActive()
+            //上机测试时开启，模拟测试时关闭
+            self.btnActive()
         }else{
             self.showText.text = "蓝牙特征发来不明"
         }
@@ -255,8 +255,8 @@ class BTViewController: UIViewController, UITableViewDelegate, UITableViewDataSo
             self.linbtn.setTitle("再次选择", for: .normal)
             
         }
-        //测试用
-        btnActive()
+        //测试用,上机测试时取消
+        //btnActive()
     }
     
     //无意思的按钮点击
