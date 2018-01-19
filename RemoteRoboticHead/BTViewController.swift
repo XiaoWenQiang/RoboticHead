@@ -215,7 +215,7 @@ class BTViewController: UIViewController, UITableViewDelegate, UITableViewDataSo
             self.showText.text = "完成特征发来的:\(String(describing: characteristic.uuid.uuidString))"
             //蓝牙成功，启动按钮
             //上机测试时开启，模拟测试时关闭
-            self.btnActive()
+            //self.btnActive()
         }else{
             self.showText.text = "蓝牙特征发来不明"
         }
@@ -253,10 +253,10 @@ class BTViewController: UIViewController, UITableViewDelegate, UITableViewDataSo
             self.linbtn.isEnabled=false
             self.linbtn.backgroundColor=UIColor.lightGray
             self.linbtn.setTitle("再次选择", for: .normal)
-            
+            //测试用,上机测试时取消
+            self.btnActive()
         }
-        //测试用,上机测试时取消
-        //btnActive()
+        
     }
     
     //无意思的按钮点击

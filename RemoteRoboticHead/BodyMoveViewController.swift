@@ -30,6 +30,8 @@ class BodyMoveViewController: UIViewController, UICollectionViewDataSource, UICo
     var penDrag2:UIPanGestureRecognizer?
     
     var currentSelectServo:[Int] = []
+    var sending:Bool = false
+    var wait:Int = 5
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,8 +136,13 @@ class BodyMoveViewController: UIViewController, UICollectionViewDataSource, UICo
                 }
             }
             //self.showText.text = "移动坐标点\(outdatas)"
-            print("测试点:\(outdatas)")
-            writeToPeripheral(bytes: outdatas)
+            //延迟发送蓝牙数据，减少延迟
+            wait -= 1
+            if(wait<=0){
+                writeToPeripheral(bytes: outdatas)
+                wait = 5
+                //print("测试点:\(outdatas)")
+            }
         }
     }
     

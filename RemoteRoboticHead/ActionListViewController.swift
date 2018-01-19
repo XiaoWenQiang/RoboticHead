@@ -14,10 +14,15 @@ class ActionListViewController: UIViewController,UITableViewDelegate, UITableVie
     @IBOutlet weak var showText: UILabel!
     //蓝牙输入框
     @IBOutlet weak var blueTinputText: UITextField!
+    //是否添加蓝牙数据头
+    @IBOutlet weak var addBTHeaderBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //读取储存的数据列表到全局参数 actionDatas[OneFaceAction]
         readActionList()
+        addBTHeaderBtn.isSelected = false
+        addBTHeaderBtn.backgroundColor = UIColor.darkGray
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -26,7 +31,7 @@ class ActionListViewController: UIViewController,UITableViewDelegate, UITableVie
     
     // MARK: - tableViews
     
-    //表格列表数量，读取数据 //还没写
+    //表格列表数量，读取数据
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return actionDatas.count
     }
@@ -48,7 +53,11 @@ class ActionListViewController: UIViewController,UITableViewDelegate, UITableVie
         //一旦点击开始输出数据到蓝牙
         self.showText.text = "当前选择:\(actionDatas[indexPath.row].name)"
         selectAction = indexPath.row
-        //待写
+        //蓝牙输出一组，
+        var outdatas:[UInt8] = [UInt8(ServoAllAccount)]
+        outdatas += actionAngleList[selectAction]
+        writeToPeripheral(bytes: outdatas)
+        print(outdatas)
     }
     //列表滑动选项
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -140,34 +149,6 @@ class ActionListViewController: UIViewController,UITableViewDelegate, UITableVie
         self.present(msgAlertCtr, animated: true, completion: nil)
     }
     
-    //单独发送数据到蓝牙
-    @IBAction func sendingTextToBTClick(_ sender: UIButton) {
-        let ptxt = self.blueTinputText.text
-        //以空格键分割数据 发送数组
-        let listxt = ptxt?.components(separatedBy: " ")
-        var datat:[UInt8] = []
-        if(listxt!.count>1){
-            for v in listxt! {
-                //转数字 如果数值大于255 或是文字 为0
-                var st = (v as NSString).intValue
-                if(st>255){
-                    st = 255
-                }
-                let temp = UInt8(st)
-                datat.append(temp)
-            }
-            if(datat.count>0){
-                //发送蓝牙数据
-                writeToPeripheral(bytes: datat)
-                showText.text = "发送了蓝牙数据\(listxt!.count)"
-            }else{
-                showText.text = "无法蓝牙数据"
-            }
-        }else{
-            showText.text = "无法蓝牙数据"
-        }
-    }
-    
     //转场
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //一次测试 保存名称数组和二维数据数组
@@ -191,6 +172,56 @@ class ActionListViewController: UIViewController,UITableViewDelegate, UITableVie
             selectAction = actionDatas.count-1
             let page = segue.destination as! ControlViewController
             page.currentActionName = actionDatas[selectAction].name
+        }
+    }
+    
+    // MARK: - sending data
+    
+    //单独发送数据到蓝牙时添加数据头与否
+    
+    @IBAction func sendingBTaddHeaderClick(_ sender: UIButton) {
+        if(sender.isSelected){
+            sender.isSelected = false
+            sender.backgroundColor = UIColor.darkGray
+        }else{
+            sender.isSelected = true
+            sender.backgroundColor = UIColor.blue
+        }
+        
+    }
+    
+    //单独发送数据到蓝牙
+    @IBAction func sendingTextToBTClick(_ sender: UIButton) {
+        let ptxt = self.blueTinputText.text
+        //以空格键分割数据 发送数组
+        let listxt = ptxt?.components(separatedBy: " ")
+        var datat:[UInt8] = []
+        if(listxt!.count>1){
+            for v in listxt! {
+                //转数字 如果数值大于255 或是文字 为0
+                var st = (v as NSString).intValue
+                if(st>255){
+                    st = 255
+                }
+                let temp = UInt8(st)
+                datat.append(temp)
+            }
+            if(datat.count>0){
+                //发送蓝牙数据 是否添加数据头
+                if(addBTHeaderBtn.isSelected){
+                    APPtoBTheader[3] = UInt8(datat.count)
+                    let ldata = APPtoBTheader + datat
+                    writeToPeripheral(bytes: ldata)
+                    showText.text = "发送了蓝牙数据\(ldata)"
+                }else{
+                    writeToPeripheral(bytes: datat)
+                    showText.text = "发送了蓝牙数据\(datat)"
+                }
+            }else{
+                showText.text = "无法蓝牙数据"
+            }
+        }else{
+            showText.text = "无法蓝牙数据"
         }
     }
     

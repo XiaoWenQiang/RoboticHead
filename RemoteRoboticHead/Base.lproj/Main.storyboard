@@ -621,17 +621,40 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qfi-nw-RU6" userLabel="Stack View blue">
                                         <rect key="frame" x="0.0" y="433" width="320" height="32"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="蓝牙输入：" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vc-VD-v5r">
-                                                <rect key="frame" x="0.0" y="0.0" width="82" height="32"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发送：" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vc-VD-v5r">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="32"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="82" id="27h-pY-Jjm"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="27h-pY-Jjm"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i26-31-gWr">
+                                                <rect key="frame" x="50" y="0.0" width="26" height="32"/>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="26" id="4Wr-Du-dkv"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <state key="normal" title="H">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="sendingBTaddHeaderClick:" destination="K9g-Ou-vKA" eventType="touchUpInside" id="3BK-fE-dG3"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yvA-Eb-ZNG">
+                                                <rect key="frame" x="76" y="0.0" width="7" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="7" id="MeL-he-LnH"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="300" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aEm-Lx-H2Y">
-                                                <rect key="frame" x="82" y="0.0" width="164" height="32"/>
+                                                <rect key="frame" x="83" y="0.0" width="163" height="32"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
@@ -751,6 +774,7 @@
                         <viewLayoutGuide key="safeArea" id="Sgi-5h-Dbz"/>
                     </view>
                     <connections>
+                        <outlet property="addBTHeaderBtn" destination="i26-31-gWr" id="y67-oW-DE8"/>
                         <outlet property="blueTinputText" destination="aEm-Lx-H2Y" id="bph-wg-WZR"/>
                         <outlet property="showText" destination="75A-Es-cN4" id="8Bs-vw-P4U"/>
                         <segue destination="rEe-Fk-mpC" kind="show" identifier="showcontrolpage" id="Nis-Dt-qz0"/>
@@ -767,8 +791,9 @@
         <image name="faceArea" width="320" height="460"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="1h3-jy-f3M"/>
         <segue reference="5UP-qJ-FbG"/>
         <segue reference="UrZ-6y-IKS"/>
-        <segue reference="enI-8g-IIT"/>
+        <segue reference="uQX-s5-CM3"/>
     </inferredMetricsTieBreakers>
 </document>

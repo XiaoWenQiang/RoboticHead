@@ -21,10 +21,12 @@ var datawriteCharacteristic: CBCharacteristic!
 
 //蓝牙传输用
 var currentServo = 250
-//单独电动机连续转动固定值 210 + 0...20 //代表20个电动机号
+//单独电动机连续转动固定值 210 + 0...20 = 212，213...//代表20个电动机号
 let ServoOneAccount = 210
 //所有电机一起转动固定值，接下来发送20个数组 250 + [90,90...90]
 let ServoAllAccount = 250
+//蓝牙设备头同步数据头 APPtoBTheader[3] 是数据长度data.count，APPtoBTheader + data 然后发送
+var APPtoBTheader:[UInt8] = [1,0,252,21,1,82]
 //蓝牙写入数据
 public func writeToPeripheral(bytes:[UInt8]) {
     if datawriteCharacteristic != nil {
@@ -53,6 +55,8 @@ public func wirteToPeripheralOne(servonu:Int,angle:UInt8){
 struct Servos {
     var name:String
     var currentAngle:UInt8
+    var minD:Float
+    var maxD:Float
     var minA:Int
     var maxA:Int
 }
@@ -71,7 +75,7 @@ public func VIEW_WIDTH(view:UIView)->CGFloat{
 public func VIEW_HEIGHT(view:UIView)->CGFloat{
     return view.frame.size.height
 }
-//活动限制空间
+//活动限制空间 //好像不怎么需要
 struct LimitArea {
     var minW:CGFloat
     var maxW:CGFloat
@@ -95,27 +99,27 @@ struct LimitArea {
 //var blue20Data:[UInt8] = [90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90]
 //滑动块用列表数据
 var servosData = [
-    Servos(name: "左侧眉毛", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "右侧眉毛", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "眼睛左右", currentAngle: 90, minA: 10, maxA: 170),
-    Servos(name: "眼睛上下", currentAngle: 90, minA: 10, maxA: 170),
-    Servos(name: "左上眼皮", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "右上眼皮", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "左下眼皮", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "右下眼皮", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "左唇上下", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "右唇上下", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "左唇前后", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "右唇前后", currentAngle: 90, minA: 20, maxA: 160),
-    Servos(name: "嘴部张合", currentAngle: 90, minA: 10, maxA: 170),
-    Servos(name: "头部旋转", currentAngle: 90, minA: 40, maxA: 140),
-    Servos(name: "头部前后", currentAngle: 90, minA: 40, maxA: 140),
-    Servos(name: "头部左右", currentAngle: 90, minA: 40, maxA: 140),
-    Servos(name: "左肩上下", currentAngle: 90, minA: 40, maxA: 140),
-    Servos(name: "右肩上下", currentAngle: 90, minA: 40, maxA: 140),
-    Servos(name: "左肩前后", currentAngle: 90, minA: 40, maxA: 140),
-    Servos(name: "右肩前后", currentAngle: 90, minA: 40, maxA: 140),
-    Servos(name: "呼吸频率", currentAngle: 90, minA: 10, maxA: 170)
+    Servos(name: "左侧眉毛", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "右侧眉毛", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "眼睛左右", currentAngle: 90, minD:-5, maxD:5, minA: 20, maxA: 160),
+    Servos(name: "眼睛上下", currentAngle: 90, minD:-5, maxD:5, minA: 20, maxA: 160),
+    Servos(name: "左上眼皮", currentAngle: 90, minD:-5, maxD:5, minA: 30, maxA: 160),
+    Servos(name: "右上眼皮", currentAngle: 90, minD:-5, maxD:5, minA: 30, maxA: 160),
+    Servos(name: "左下眼皮", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "右下眼皮", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "左唇上下", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "右唇上下", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "左唇前后", currentAngle: 90, minD:-5, maxD:5, minA: 20, maxA: 160),
+    Servos(name: "右唇前后", currentAngle: 90, minD:-5, maxD:5, minA: 20, maxA: 160),
+    Servos(name: "嘴部张合", currentAngle: 90, minD:-5, maxD:5, minA: 10, maxA: 150),
+    Servos(name: "头部旋转", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "头部前后", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "头部左右", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "左肩上下", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "右肩上下", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "左肩前后", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "右肩前后", currentAngle: 90, minD:-5, maxD:5, minA: 40, maxA: 140),
+    Servos(name: "呼吸频率", currentAngle: 90, minD:-5, maxD:5, minA: 10, maxA: 170)
 ]
 //蓝牙传输数据更新
 public func saveDataUpdate()->[UInt8]{
